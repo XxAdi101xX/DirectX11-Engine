@@ -1,30 +1,32 @@
+#pragma once
+
 #include <Windows.h>
+#include <string>
+
+#include "BaseException.h"
 
 class Window
 {
-private:
-	// Singleton
-	class WindowClass
-	{
-	public:
-		static const wchar_t *GetName() noexcept;
-		static HINSTANCE GetInstance() noexcept;
-	private:
-		WindowClass() noexcept;
-		~WindowClass();
 
-		WindowClass(const WindowClass&) = delete;
-		WindowClass& operator=(const WindowClass&) = delete;
-
-		static WindowClass windowClass;
-		static constexpr const wchar_t *wndClassName = L"DirectX11 Engine Window";
-		HINSTANCE hInst;
-	};
 public:
-	Window(int width, int height, const wchar_t* name) noexcept;
+	Window(int width, int height, const wchar_t* name);
 	~Window();
 	Window(const Window&) = delete;
 	Window& operator=(const Window&) = delete;
+
+	static std::wstring TranslateErrorCode(HRESULT hr) noexcept;
+
+	class Win32Exception : public BaseException
+	{
+	public:
+		Win32Exception(int line, const char *file, HRESULT hResult) noexcept;
+		virtual const wchar_t *What() const noexcept override;
+		virtual const wchar_t *GetType() const noexcept override;
+
+		HRESULT GetHResult() const noexcept;
+	private:
+		HRESULT hResult;
+	};
 private:
 	int width;
 	int height;
@@ -36,4 +38,30 @@ private:
 	// Obtain the hWnd from USERDATA and invoke HandleMessage
 	static LRESULT WINAPI HandleMsgThunk(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
 	LRESULT HandleMsg(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) noexcept;
+
+	// Singleton WindowClass
+	class WindowClass
+	{
+	public:
+		static const wchar_t *GetName() noexcept;
+		static HINSTANCE GetInstance() noexcept;
+	private:
+		WindowClass() noexcept;
+		~WindowClass();
+
+		WindowClass(const WindowClass &) = delete;
+		WindowClass &operator=(const WindowClass &) = delete;
+
+		static WindowClass windowClass;
+		static constexpr const wchar_t *wndClassName = L"DirectX11 Engine Window";
+		HINSTANCE hInst;
+	};
 };
+
+std::string ConvertWideToUtf8(const std::wstring &wstr);
+
+std::wstring ConvertUtf8ToWide(const std::string &str);
+
+#define WIN32EXCEPTION(hResult) Window::Win32Exception( __LINE__,__FILE__, hResult)
+
+
