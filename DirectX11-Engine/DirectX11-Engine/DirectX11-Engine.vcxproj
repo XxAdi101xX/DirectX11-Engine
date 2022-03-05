@@ -148,11 +148,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BaseException.cpp" />
+    <ClCompile Include="Keyboard.cpp" />
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="WinMain.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseException.h" />
+    <ClInclude Include="Keyboard.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>

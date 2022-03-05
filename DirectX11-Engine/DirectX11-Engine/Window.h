@@ -4,6 +4,7 @@
 #include <string>
 
 #include "BaseException.h"
+#include "Keyboard.h"
 
 class Window
 {
@@ -13,6 +14,8 @@ public:
 	~Window();
 	Window(const Window&) = delete;
 	Window& operator=(const Window&) = delete;
+
+	Keyboard keyboard;
 
 	static std::wstring TranslateErrorCode(HRESULT hr) noexcept;
 
