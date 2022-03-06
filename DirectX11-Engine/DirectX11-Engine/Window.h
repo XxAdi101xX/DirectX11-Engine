@@ -5,6 +5,7 @@
 
 #include "BaseException.h"
 #include "Keyboard.h"
+#include "Mouse.h"
 
 class Window
 {
@@ -16,6 +17,9 @@ public:
 	Window& operator=(const Window&) = delete;
 
 	Keyboard keyboard;
+	Mouse mouse;
+
+	void SetTitle(const std::wstring &title) const;
 
 	static std::wstring TranslateErrorCode(HRESULT hr) noexcept;
 
