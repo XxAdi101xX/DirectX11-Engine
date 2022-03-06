@@ -2,6 +2,7 @@
 
 #include <Windows.h>
 #include <string>
+#include <optional>
 
 #include "BaseException.h"
 #include "Keyboard.h"
@@ -22,6 +23,7 @@ public:
 	void SetTitle(const std::wstring &title) const;
 
 	static std::wstring TranslateErrorCode(HRESULT hr) noexcept;
+	static std::optional<int> ProcessMessages();
 
 	class Win32Exception : public BaseException
 	{
