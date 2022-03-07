@@ -2,6 +2,7 @@
 #include <sstream>
 
 #include "resource.h"
+#include "Graphics.h"
 
 
 
@@ -72,12 +73,20 @@ Window::Window(int width, int height, const wchar_t *name) : width(width), heigh
 
 	// show window
 	ShowWindow(hWnd, SW_SHOWDEFAULT);
+
+	pGraphics = std::make_unique<Graphics>(hWnd);
 }
 
 Window::~Window()
 {
 	DestroyWindow(hWnd);
 }
+
+Graphics &Window::GetGraphics()
+{
+	return *pGraphics;
+}
+
 
 void Window::SetTitle(const std::wstring &title) const
 {

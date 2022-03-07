@@ -4,6 +4,7 @@
 
 #include <sstream>
 #include <iomanip>
+#include "Graphics.h"
 
 App::App() : wnd(1280, 720, L"DirectX11 Engine")
 {}
@@ -53,4 +54,7 @@ void App::ProcessFrame()
 	std::wstringstream oss;
 	oss << L"Time elapsed: " << std::setprecision(1) << std::fixed << t << "s";
 	wnd.SetTitle(oss.str());
+
+	wnd.GetGraphics().ClearBuffer(1.0f, 0.5f, 0.0f);
+	wnd.GetGraphics().EndFrame();
 }

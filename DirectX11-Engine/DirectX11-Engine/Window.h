@@ -3,10 +3,14 @@
 #include <Windows.h>
 #include <string>
 #include <optional>
+#include <memory>
+
 
 #include "BaseException.h"
 #include "Keyboard.h"
 #include "Mouse.h"
+
+class Graphics;
 
 class Window
 {
@@ -21,6 +25,7 @@ public:
 	Mouse mouse;
 
 	void SetTitle(const std::wstring &title) const;
+	Graphics &GetGraphics();
 
 	static std::wstring TranslateErrorCode(HRESULT hr) noexcept;
 	static std::optional<int> ProcessMessages();
@@ -40,6 +45,7 @@ private:
 	int width;
 	int height;
 	HWND hWnd;
+	std::unique_ptr<Graphics> pGraphics;
 
 	// Note: we are making the following two methods static so that it is compatible with windows api calls as these functions can't be member functions; core logic will still reside on the HandleMsg member function
 	// Setup the win32 side pointers to the HandleMsgMain and hWnd so that they can later invoke the HandleMsg member function
