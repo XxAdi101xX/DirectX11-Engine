@@ -1,6 +1,7 @@
 #pragma once
 #include "Window.h"
 #include <d3d11.h>
+#include "wrl.h"
 
 #include <vector>
 
@@ -10,12 +11,12 @@ public:
 	Graphics(HWND hWnd);
 	Graphics(const Graphics &) = delete;
 	Graphics &operator=(const Graphics &) = delete;
-	~Graphics();
+	~Graphics() = default;
 	void ClearBuffer(float red, float green, float blue) noexcept;
 	void EndFrame();
 private:
-	ID3D11Device *pDevice = nullptr;
-	IDXGISwapChain *pSwapChain = nullptr;
-	ID3D11DeviceContext *pDeviceContext = nullptr;
-	ID3D11RenderTargetView *pRenderTargetView = nullptr;
+	Microsoft::WRL::ComPtr<ID3D11Device> pDevice = nullptr;
+	Microsoft::WRL::ComPtr <IDXGISwapChain> pSwapChain = nullptr;
+	Microsoft::WRL::ComPtr <ID3D11DeviceContext> pDeviceContext = nullptr;
+	Microsoft::WRL::ComPtr <ID3D11RenderTargetView> pRenderTargetView = nullptr;
 };

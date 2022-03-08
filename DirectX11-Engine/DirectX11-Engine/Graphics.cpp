@@ -38,30 +38,9 @@ Graphics::Graphics(HWND hWnd)
 	));
 
 	// Get Texture subresource in swapchain
-	ID3D11Resource *pBackBuffer = nullptr;
-	pSwapChain->GetBuffer(0, __uuidof(ID3D11Resource), reinterpret_cast<void **>(&pBackBuffer));
-	pDevice->CreateRenderTargetView(pBackBuffer, nullptr, &pRenderTargetView);
-	pBackBuffer->Release();
-}
-
-Graphics::~Graphics()
-{
-	if (pRenderTargetView != nullptr)
-	{
-		pRenderTargetView->Release();
-	}
-	if (pDeviceContext != nullptr)
-	{
-		pDeviceContext->Release();
-	}
-	if (pSwapChain != nullptr)
-	{
-		pSwapChain->Release();
-	}
-	if (pDevice != nullptr)
-	{
-		pDevice->Release();
-	}
+	Microsoft::WRL::ComPtr<ID3D11Resource> pBackBuffer = nullptr;
+	pSwapChain->GetBuffer(0, __uuidof(ID3D11Resource), &pBackBuffer);
+	pDevice->CreateRenderTargetView(pBackBuffer.Get(), nullptr, &pRenderTargetView);
 }
 
 void Graphics::EndFrame()
@@ -72,5 +51,5 @@ void Graphics::EndFrame()
 void Graphics::ClearBuffer(float red, float green, float blue) noexcept
 {
 	const float color[] = { red, green, blue, 1.0f };
-	pDeviceContext->ClearRenderTargetView(pRenderTargetView, color);
+	pDeviceContext->ClearRenderTargetView(pRenderTargetView.Get(), color);
 }
