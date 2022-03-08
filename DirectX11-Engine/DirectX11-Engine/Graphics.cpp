@@ -22,11 +22,11 @@ Graphics::Graphics(HWND hWnd)
 	sd.Flags = 0;
 
 	// create device and front/back buffers, and swap chain and rendering context
-	D3D11CreateDeviceAndSwapChain(
+	CHECK_HRESULT(D3D11CreateDeviceAndSwapChain(
 		nullptr,
 		D3D_DRIVER_TYPE_HARDWARE,
 		nullptr,
-		0,
+		D3D11_CREATE_DEVICE_DEBUG,
 		nullptr,
 		0,
 		D3D11_SDK_VERSION,
@@ -35,7 +35,7 @@ Graphics::Graphics(HWND hWnd)
 		&pDevice,
 		nullptr,
 		&pDeviceContext
-	);
+	));
 
 	// Get Texture subresource in swapchain
 	ID3D11Resource *pBackBuffer = nullptr;

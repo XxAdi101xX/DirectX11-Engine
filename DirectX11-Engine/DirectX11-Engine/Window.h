@@ -78,5 +78,7 @@ std::string ConvertWideToUtf8(const std::wstring &wstr);
 std::wstring ConvertUtf8ToWide(const std::string &str);
 
 #define WIN32EXCEPTION(hResult) Window::Win32Exception( __LINE__,__FILE__, hResult)
+#define CHECK_HRESULT(hResult) if (FAILED(hResult)) throw WIN32EXCEPTION(hResult)
+
 
 
