@@ -16,11 +16,12 @@ public:
 	Graphics &operator=(const Graphics &) = delete;
 	~Graphics() = default;
 	void ClearBuffer(float red, float green, float blue) noexcept;
-	void DrawTestTriangle(float angle);
+	void DrawTestTriangle(float angle, float x, float z);
 	void EndFrame();
 private:
-	Microsoft::WRL::ComPtr<ID3D11Device> pDevice = nullptr;
-	Microsoft::WRL::ComPtr <IDXGISwapChain> pSwapChain = nullptr;
-	Microsoft::WRL::ComPtr <ID3D11DeviceContext> pDeviceContext = nullptr;
-	Microsoft::WRL::ComPtr <ID3D11RenderTargetView> pRenderTargetView = nullptr;
+	Microsoft::WRL::ComPtr<ID3D11Device> pDevice;
+	Microsoft::WRL::ComPtr <IDXGISwapChain> pSwapChain;
+	Microsoft::WRL::ComPtr <ID3D11DeviceContext> pDeviceContext;
+	Microsoft::WRL::ComPtr <ID3D11RenderTargetView> pRenderTargetView;
+	Microsoft::WRL::ComPtr <ID3D11DepthStencilView> pDepthStencilView;
 };

@@ -56,6 +56,7 @@ void App::ProcessFrame()
 	wnd.SetTitle(oss.str());
 
 	wnd.GetGraphics().ClearBuffer(1.0f, 0.5f, 0.0f);
-	wnd.GetGraphics().DrawTestTriangle(t);
+	wnd.GetGraphics().DrawTestTriangle(-t, 2.0f, 5.0);
+	wnd.GetGraphics().DrawTestTriangle(t * 0.5f, 0.0f, 5.0);
 	wnd.GetGraphics().EndFrame();
 }
